@@ -33,14 +33,5 @@ RUN pip install torch==2.6.0 torchvision torchaudio \
     --index-url https://download.pytorch.org/whl/cu124
 
 # Heavy ML deps
-RUN pip install \
-    transformers==4.51.0 \
-    accelerate==0.25.0 \
-    bitsandbytes==0.45.4 \
-    peft==0.7.0 \
-    datasets==2.18.0 \
-    wandb==0.15.0 \
-    vllm==0.8.2
-
 WORKDIR /workspace
 CMD ["/bin/bash"]
