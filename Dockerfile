@@ -28,8 +28,9 @@ RUN apt-get update && apt-get install -y \
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 \
     && update-alternatives --install /usr/bin/python python /usr/bin/python3.12 1
 
-# Upgrade pip
-RUN python3.12 -m pip install --upgrade pip setuptools wheel
+# Install pip for Python 3.12 and upgrade it
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12 \
+    && python3.12 -m pip install --upgrade pip setuptools wheel
 
 # Pre-install PyTorch with CUDA support (speeds up subsequent installs)
 RUN pip install torch==2.6.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
