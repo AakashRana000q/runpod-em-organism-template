@@ -1,5 +1,6 @@
 # Use NVIDIA CUDA base image with Python 3.12
-FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
+# Using CUDA 12.4 for compatibility with PyTorch 2.6.0+
+FROM nvidia/cuda:12.4.0-cudnn-devel-ubuntu22.04
 
 # Prevent interactive prompts during installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -16,10 +17,9 @@ RUN apt-get update && apt-get install -y \
     python3.12 \
     python3.12-venv \
     python3.12-dev \
-    python3-pip \
+    curl \
     git \
     wget \
-    curl \
     vim \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
@@ -31,6 +31,7 @@ RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
 # Install pip for Python 3.12 and upgrade it
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12 \
     && python3.12 -m pip install --upgrade pip setuptools wheel
+
 
 # Pre-install PyTorch with CUDA support (speeds up subsequent installs)
 RUN pip install torch==2.6.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
